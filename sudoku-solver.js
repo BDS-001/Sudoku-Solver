@@ -29,9 +29,14 @@ function getBoard() {
     let board = []
     boardRows.forEach((boardRow) => {
         const numbers = boardRow.getElementsByClassName('number-box')
-        columns.forEach((index) => {
-            console.log(index)
-        })
+        for (i=0;i<=6;i+=3) {
+            let tmp = []
+            columns.forEach((index) => {
+                let squarePosition = index + i
+                tmp.push(numbers[squarePosition].value)
+            })
+            board.push(tmp)
+        }
     })
 }
 
