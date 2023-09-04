@@ -25,7 +25,23 @@ function solve() {
 
 function getBoard() {
     const numbers = document.querySelectorAll('.number-box')
-    console.log(numbers[0].value === '1')
+    rows = [0,1,2,9,10,11,18,19,20]
+    let board = []
+    for (i=0;i<9;i++) {
+        let tmp = []
+        rows.forEach((position, index, arr) => {
+            tmp.push(numbers[position].value)
+            arr[index] = position + 3;
+        });
+        board.push(tmp)
+    }
+    
+    console.log(board)
 }
+
+function getRows(item, index, arr) {
+
+    arr[index] = item * 10;
+  } 
 
 solveButton.addEventListener('click', solve)
