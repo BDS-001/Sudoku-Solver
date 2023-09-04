@@ -1,5 +1,6 @@
 const body = document.querySelector('body')
 const numberBoxes = document.querySelectorAll('.number-box')
+const solveButton = document.querySelector('.solve')
 
 numberBoxes.forEach(function(numberBox) {
 
@@ -17,3 +18,14 @@ numberBoxes.forEach(function(numberBox) {
         }
     });
 });
+
+function solve() {
+    const board = getBoard()
+}
+
+function getBoard() {
+    const numbers = document.querySelectorAll('.number-box')
+    console.log(numbers[0].value === '1')
+}
+
+solveButton.addEventListener('click', solve)
