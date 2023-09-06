@@ -21,6 +21,21 @@ numberBoxes.forEach(function(numberBox) {
 
 function solve() {
     const board = getBoard()
+    backtrack(board)
+
+}
+
+function completeBoard(board) {
+    for (i=0;i<board.length;i++) {
+        if (board[i].filter(blanks).length > 0) {
+            return false
+        }
+    }
+    return true
+}
+
+function blanks(value) {
+    return value === ''
 }
 
 function getBoard() {
@@ -38,6 +53,18 @@ function getBoard() {
             board.push(tmp)
         }
     })
+    console.log(board)
+}
+
+function backtrack(board, x=0, y=0) {
+    let nextY = y + 1
+    let nextX = x
+    if (nextY > 8) {
+        y = 0
+        nextX = x + 1
+    }
 }
 
 solveButton.addEventListener('click', solve)
+
+console.log(numberBoxes[0].value === '')
