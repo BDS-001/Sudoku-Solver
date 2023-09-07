@@ -63,7 +63,7 @@ function enableSolve() {
 
     function test() {
         const test = getBoard()
-        console.log(validBoard(test))
+        console.log(test)
     }
 }
 
@@ -79,7 +79,18 @@ pageSetup()
 
 // solve functions
 function getBoard() {
-    const inputBoxes = document.querySelectorAll('.number-box')
+    const boardRows = document.querySelectorAll('.board-row')
+    let board = []
+
+    boardRows.forEach((row) => {
+        const sudokuValues = row.querySelectorAll('.number-box')
+        let tmpRow = []
+        sudokuValues.forEach((inputBox) => {
+            tmpRow.push(inputBox.value)
+        })
+        board.push(tmpRow)
+    })
+    return board
 }
 
 function solve() {
@@ -90,25 +101,13 @@ function solve() {
 
 function completeBoard(board) {
     for (i=0;i<board.length;i++) {
-        if (board[i].filter(blanks).length > 0) {
+        if (board[i].filter((value) => {
+            return value === ''
+        }).length > 0) {
             return false
         }
     }
     return true
-}
-
-function blanks(value) {
-    return value === ''
-}
-
-
-function backtrack(board, x=0, y=0) {
-    let nextY = y + 1
-    let nextX = x
-    if (nextY > 8) {
-        y = 0
-        nextX = x + 1
-    }
 }
 
 function checkRow(board) {
