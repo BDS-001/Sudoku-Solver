@@ -103,11 +103,15 @@ function checkColumns(board) {
     return true
 }
 
+function validBoard(board) {
+    return checkRow(board) && checkColumns(board)
+}
+
 solveButton.addEventListener('click', test)
 
 console.log(numberBoxes[0].value === '')
 
 function test() {
     const test = getBoard()
-    console.log(checkColumns(test))
+    console.log(validBoard(test))
 }
