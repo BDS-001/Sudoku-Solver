@@ -2,10 +2,12 @@
 function pageSetup() {
     const board = document.querySelector('#board')
 
+    // start by adding an initial horizontal divider
     let horizontalDiv = document.createElement('div')
     horizontalDiv.className = 'horizontal-divider'
     board.append(horizontalDiv)
     
+    // create 9 rows for the board, start each row with a vertical divider
     for (row=1;row<=9;row++) {
         const boardRow = document.createElement('div')
         boardRow.className = 'board-row'
@@ -13,19 +15,23 @@ function pageSetup() {
         const verticalDiv = document.createElement('div')
         verticalDiv.className = 'vertical-divider'
         boardRow.append(verticalDiv)
-    
+        
+        // in each row, add 9 input boxes
         for (i=1;i<=9;i++) {
             const inputBox = document.createElement('input')
             inputBox.className = 'number-box'
             inputBox.type = 'text'
             boardRow.append(inputBox)
-    
+            
+            // every third inputbox add a vertical divider to seprate boxes into 3 sections
             if (i % 3 === 0) {
                 const verticalDiv = document.createElement('div')
                 verticalDiv.className = 'vertical-divider'
                 boardRow.append(verticalDiv)
             }
         }
+        
+        // add the finished row to the board, every third row add a horizontal divider
         board.append(boardRow)
         if (row % 3 === 0) {
             let horizontalDiv = document.createElement('div')
@@ -33,6 +39,8 @@ function pageSetup() {
             board.append(horizontalDiv)
         }
     }
+
+    // add event listeners to input boxes and solve button
     enableSudokuInput()
     enableSolve()
 }
@@ -148,6 +156,7 @@ function checkColumns(board) {
     return true
 }
 
+// valid board consists of valid rows, columns, and board segments
 function validBoard(board) {
     return checkRow(board) && checkColumns(board)
 }
