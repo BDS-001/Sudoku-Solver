@@ -21,19 +21,6 @@ body {
     display: flex;
 }
 
-.board-section {
-    border: 5px solid black;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.board-section-row {
-    display: flex;
-    flex: 1;
-}
-
 .number-box {
     border: 1px solid black;
     width: 99%;
@@ -44,6 +31,11 @@ body {
     margin: 0; 
 }
 
-.remove-right-border {
-    border-right: none;
+.horizontal-divider,
+.vertical-divider {
+    border: 5px solid black;
+}
+
+.vertical-divider {
+    width: 0px;
 }

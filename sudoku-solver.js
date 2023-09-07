@@ -1,23 +1,86 @@
-const body = document.querySelector('body')
-const numberBoxes = document.querySelectorAll('.number-box')
-const solveButton = document.querySelector('.solve')
+// initial page setup
+function pageSetup() {
+    const board = document.querySelector('#board')
 
-numberBoxes.forEach(function(numberBox) {
-
-    // Add an event listener to the input field for the "keydown" event
-    numberBox.addEventListener('keypress', function (event) {
-        // Get the key code of the pressed key and prevent the defualt behavior of automatically displaying the keyvalue
-        event.preventDefault();
-        const keyCode = event.charCode;
-
-        // Check if the key is a number key (0-9)
-        if ((keyCode >= 49 && keyCode <= 57)) {
-            numberBox.value = event.key
-        } else {
-            numberBox.value = ''
+    let horizontalDiv = document.createElement('div')
+    horizontalDiv.className = 'horizontal-divider'
+    board.append(horizontalDiv)
+    
+    for (row=1;row<=9;row++) {
+        const boardRow = document.createElement('div')
+        boardRow.className = 'board-row'
+    
+        const verticalDiv = document.createElement('div')
+        verticalDiv.className = 'vertical-divider'
+        boardRow.append(verticalDiv)
+    
+        for (i=1;i<=9;i++) {
+            const inputBox = document.createElement('input')
+            inputBox.className = 'number-box'
+            inputBox.type = 'text'
+            boardRow.append(inputBox)
+    
+            if (i % 3 === 0) {
+                const verticalDiv = document.createElement('div')
+                verticalDiv.className = 'vertical-divider'
+                boardRow.append(verticalDiv)
+            }
         }
+        board.append(boardRow)
+        if (row % 3 === 0) {
+            let horizontalDiv = document.createElement('div')
+            horizontalDiv.className = 'horizontal-divider'
+            board.append(horizontalDiv)
+        }
+    }
+    enableSudokuInput()
+    enableSolve()
+}
+
+function enableSudokuInput() {
+    const inputBoxes = document.querySelectorAll('.number-box')
+    inputBoxes.forEach(function(inputBox) {
+
+        // Add an event listener to the input field for the "keydown" event
+        inputBox.addEventListener('keypress', function (event) {
+            // Get the key code of the pressed key and prevent the defualt behavior of automatically displaying the keyvalue
+            event.preventDefault();
+            const keyCode = event.charCode;
+    
+            // Check if the key is a number key (0-9)
+            if ((keyCode >= 49 && keyCode <= 57)) {
+                inputBox.value = event.key
+            } else {
+                inputBox.value = ''
+            }
+        });
     });
-});
+}
+
+function enableSolve() {
+    const solveButton = document.querySelector('.solve')
+    solveButton.addEventListener('click', test)
+
+    function test() {
+        const test = getBoard()
+        console.log(validBoard(test))
+    }
+}
+
+pageSetup()
+
+
+
+
+
+
+
+
+
+// solve functions
+function getBoard() {
+    const inputBoxes = document.querySelectorAll('.number-box')
+}
 
 function solve() {
     const board = getBoard()
@@ -38,23 +101,6 @@ function blanks(value) {
     return value === ''
 }
 
-function getBoard() {
-    const boardRows = document.querySelectorAll('.board-row')
-    const columns = [0,1,2,9,10,11,18,19,20]
-    let board = []
-    boardRows.forEach((boardRow) => {
-        const numbers = boardRow.getElementsByClassName('number-box')
-        for (i=0;i<=6;i+=3) {
-            let tmp = []
-            columns.forEach((index) => {
-                let squarePosition = index + i
-                tmp.push(numbers[squarePosition].value)
-            })
-            board.push(tmp)
-        }
-    })
-    return board
-}
 
 function backtrack(board, x=0, y=0) {
     let nextY = y + 1
@@ -105,13 +151,4 @@ function checkColumns(board) {
 
 function validBoard(board) {
     return checkRow(board) && checkColumns(board)
-}
-
-solveButton.addEventListener('click', test)
-
-console.log(numberBoxes[0].value === '')
-
-function test() {
-    const test = getBoard()
-    console.log(validBoard(test))
 }
