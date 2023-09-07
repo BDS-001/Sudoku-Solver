@@ -53,7 +53,7 @@ function getBoard() {
             board.push(tmp)
         }
     })
-    console.log(board)
+    return board
 }
 
 function backtrack(board, x=0, y=0) {
@@ -65,6 +65,31 @@ function backtrack(board, x=0, y=0) {
     }
 }
 
-solveButton.addEventListener('click', solve)
+function checkRow(board) {
+    // go through each row of the board
+    for (row=0;row < board.length;row++) {
+        // in each row check all of the numbers for duplicatees in the row
+        for (num=1;num <= 9; num++) {
+            console.log(board[0].filter((t) => {
+                console.log(t, num, t === num)
+                return t === num
+            }))
+            // filter the board to only have the values that match the current number being checked, if there amre more than 1 instance than the row is not valid
+            if (board[row].filter((sudokuValue) => {
+                return sudokuValue === num
+            }).length > 1) {
+                return false
+            }
+        }
+    };
+    return true
+}
+
+solveButton.addEventListener('click', test)
 
 console.log(numberBoxes[0].value === '')
+
+function test() {
+    const test = getBoard()
+    console.log(checkRow(test))
+}
