@@ -81,11 +81,33 @@ function checkRow(board) {
     return true
 }
 
+function checkColumns(board) {
+    // loop through each column in the board
+    for (col=0;col<9;col++) {
+
+        // put all the numbers in a column into an array check for duplicates
+        let colNums = []
+        for (row=0;row<board.length;row++) {
+           colNums.push(board[row][col])
+        }
+
+        // check for duplicates of each number
+        for (num=1;num<=9;num++) {
+            if (colNums.filter((sudokuValue) => {
+                return sudokuValue === `${num}`
+            }).length > 1) {
+                return false
+            }
+        }
+    }
+    return true
+}
+
 solveButton.addEventListener('click', test)
 
 console.log(numberBoxes[0].value === '')
 
 function test() {
     const test = getBoard()
-    console.log(checkRow(test))
+    console.log(checkColumns(test))
 }
