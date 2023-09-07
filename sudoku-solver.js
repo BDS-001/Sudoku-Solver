@@ -6,12 +6,12 @@ numberBoxes.forEach(function(numberBox) {
 
     // Add an event listener to the input field for the "keydown" event
     numberBox.addEventListener('keypress', function (event) {
-        // Get the key code of the pressed key
+        // Get the key code of the pressed key and prevent the defualt behavior of automatically displaying the keyvalue
         event.preventDefault();
         const keyCode = event.charCode;
 
         // Check if the key is a number key (0-9)
-        if ((keyCode >= 49 && keyCode <= 57 && event.key !== '0')) {
+        if ((keyCode >= 49 && keyCode <= 57)) {
             numberBox.value = event.key
         } else {
             numberBox.value = ''
