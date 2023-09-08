@@ -133,6 +133,15 @@ function solve() {
 
 }
 
+function emptyCell(board) {
+    for (let row = 0; row < 9; row++) {
+        for (let col = 0; col < 9; col++) {
+            if (board[col][row] === '')
+            return [col, row]
+        }
+    }
+}
+
 function completeBoard(board) {
     for (i=0;i<board.length;i++) {
         if (board[i].includes('')) {
@@ -220,10 +229,6 @@ function validBoardSegment(board, x, y) {
         }
     }
     return true
-}
-
-function backtrack(board, x, y) {
-
 }
 
 // valid board consists of valid rows, columns, and board segments
