@@ -121,7 +121,7 @@ function solve() {
     const testing = [
         [ "1", "2", "9", "4", "3", "8", "", "", "" ],
         [ "5", "6", "8", "1", "7", "9", "", "", "" ],
-        [ "4", "3", "7", "2", "5", "6", "", "", "" ],
+        [ "4", "3", "7", "2", "5", "6", "", "8", "1" ],
         [ "7", "9", "4", "3", "6", "2", "5", "1", "8" ],
         [ "2", "5", "1", "9", "8", "4", "6", "7", "3" ],
         [ "3", "8", "6", "5", "1", "7", "2", "9", "4" ],
@@ -129,15 +129,13 @@ function solve() {
         [ "6", "7", "2", "8", "4", "3", "1", "5", "9" ],
         [ "9", "4", "5", "6", "2", "1", "8", "3", "7" ],
     ]
-    backtrack(testing, 0, 0)
+    console.log('WIP')
 
 }
 
 function completeBoard(board) {
     for (i=0;i<board.length;i++) {
-        if (board[i].filter((value) => {
-            return value === ''
-        }).length > 0) {
+        if (board[i].includes('')) {
             return false
         }
     }
@@ -225,29 +223,6 @@ function validBoardSegment(board, x, y) {
 }
 
 function backtrack(board, x, y) {
-    console.log(x, y)
-    
-    // base case the board is full
-    if (completeBoard(board) && validBoard(board)) {
-        console.log('completed board:', board)
-        return
-    }
-
-    // get the coordinates of the next board value
-    let nextX = x + 1
-    let nextY = y
-    if (nextX >= 9) {
-        nextX = 0
-        nextY = y + 1
-    }
-
-    for (i=1;i<9;i++) {
-        const newBoard = structuredClone(board)
-        newBoard[y][x] = `${i}`
-        console.log(newBoard, board)
-        backtrack(newBoard, nextX, nextY)
-    }
-
 
 }
 
@@ -255,5 +230,3 @@ function backtrack(board, x, y) {
 function validBoard(board) {
     return checkRows(board) && checkColumns(board) && checkBoardSegments(board)
 }
-
-
