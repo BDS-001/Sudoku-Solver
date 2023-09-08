@@ -37,7 +37,7 @@ function pageSetup() {
         boardRow.append(verticalDiv)
         
         // in each row, add 9 input boxes
-        for (i=1;i<=9;i++) {
+        for (let i=1;i<=9;i++) {
             const inputBox = document.createElement('input')
             inputBox.className = 'number-box'
             inputBox.type = 'text'
@@ -101,6 +101,8 @@ pageSetup()
 
 
 // solve functions
+
+// get the board from the HTML document
 function getBoard() {
     const boardRows = document.querySelectorAll('.board-row')
     let board = []
@@ -116,6 +118,7 @@ function getBoard() {
     return board
 }
 
+// solve the sudoku puzzle
 function solve() {
     const board = getBoard()
     const testing = [
@@ -131,10 +134,11 @@ function solve() {
     ]
     console.log('WIP')
     console.log(emptyCell(testing))
-    console.log(checkRow(testing, 0, '6'))
+    console.log(checkRow(testing, 0, 6))
 
 }
 
+// find an empty cell in the board
 function emptyCell(board) {
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
@@ -144,40 +148,22 @@ function emptyCell(board) {
     }
 }
 
-function completeBoard(board) {
-    for (i=0;i<board.length;i++) {
-        if (board[i].includes('')) {
-            return false
-        }
-    }
-    return true
-}
 
+// check if the number already exists in the row
 function checkRow(board, row, num) {
-    return (board[row].includes(num))
+    return (board[row].includes(`${num}`))
 }
 
-function checkColumns(board) {
+// check if the number is already in the column
+function checkColumn(board, col, num) {
     // loop through each column in the board
-    for (col=0;col<9;col++) {
-
-        // put all the numbers in a column into an array check for duplicates
-        let colNums = []
-        for (row=0;row<board.length;row++) {
-           colNums.push(board[row][col])
-        }
-
-        // check for duplicates of each number
-        for (num=1;num<=9;num++) {
-            if (colNums.filter((sudokuValue) => {
-                return sudokuValue === `${num}`
-            }).length > 1) {
-                return false
-            }
-        }
-    }
-    return true
+   for (let row=0;row<board.length;row++) {
+        if (board[row][col] === `${num}`) return true
+   }
+   return false
 }
+
+
 
 function checkBoardSegments(board) {
     const yRegions = {
