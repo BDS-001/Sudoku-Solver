@@ -1,3 +1,5 @@
+let solved = false
+
 let test2 = [
     [ "1", "2", "9", "4", "3", "8", "7", "6", "5" ],
     [ "5", "6", "8", "1", "7", "9", "3", "4", "2" ],
@@ -9,6 +11,12 @@ let test2 = [
     [ "6", "7", "2", "8", "4", "3", "1", "5", "9" ],
     [ "9", "4", "5", "6", "2", "1", "8", "3", "7" ],
 ]
+
+
+
+
+
+
 
 // initial page setup
 function pageSetup() {
@@ -121,10 +129,7 @@ function solve() {
         [ "6", "7", "2", "8", "4", "3", "1", "5", "9" ],
         [ "9", "4", "5", "6", "2", "1", "8", "3", "7" ],
     ]
-
-    console.log(checkRows(testing))
-    console.log(checkColumns(testing))
-    console.log(checkBoardSegments(testing))
+    backtrack(testing, 0, 0)
 
 }
 
@@ -219,11 +224,36 @@ function validBoardSegment(board, x, y) {
     return true
 }
 
-function stackSolve(board) {
+function backtrack(board, x, y) {
+    console.log(x, y)
     
+    // base case the board is full
+    if (completeBoard(board) && validBoard(board)) {
+        console.log('completed board:', board)
+        return
+    }
+
+    // get the coordinates of the next board value
+    let nextX = x + 1
+    let nextY = y
+    if (nextX >= 9) {
+        nextX = 0
+        nextY = y + 1
+    }
+
+    for (i=1;i<9;i++) {
+        const newBoard = structuredClone(board)
+        newBoard[y][x] = `${i}`
+        console.log(newBoard, board)
+        backtrack(newBoard, nextX, nextY)
+    }
+
+
 }
 
 // valid board consists of valid rows, columns, and board segments
 function validBoard(board) {
     return checkRows(board) && checkColumns(board) && checkBoardSegments(board)
 }
+
+
