@@ -165,49 +165,6 @@ function checkColumn(board, col, num) {
 
 
 
-function checkBoardSegments(board) {
-    const yRegions = {
-        "top":[0,3], 
-        "mid":[3,6],
-        "bottom":[6,9]
-    }
-    const xRegions = {
-        "left":[0,3], 
-        "mid":[3,6],
-        "right":[6,9]
-    } 
-
-
-    for (const xKey in xRegions) {
-        for (const yKey in yRegions) {
-            if (!validBoardSegment(board, xRegions[xKey], yRegions[yKey])) {
-                return false
-            }
-        }
-    }
-    return true
-}
-
-function validBoardSegment(board, x, y) {
-    segmentValues = []
-    for (i=x[0];i<x[1];i++) {
-        for (j=y[0];j<y[1];j++) {
-            segmentValues.push(board[j][i])
-        }
-    }
-
-    // check for duplicates of each number
-    for (num=1;num<=9;num++) {
-        if (segmentValues.filter((sudokuValue) => {
-            return sudokuValue === `${num}`
-        }).length > 1) {
-            return false
-        }
-    }
-    return true
-}
-
-// valid board consists of valid rows, columns, and board segments
-function validBoard(board) {
-    return checkRows(board) && checkColumns(board) && checkBoardSegments(board)
+function checkBox(board, row, col, num) {
+    return
 }
