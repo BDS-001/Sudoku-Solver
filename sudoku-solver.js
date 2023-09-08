@@ -1,3 +1,15 @@
+let test2 = [
+    [ "1", "2", "9", "4", "3", "8", "7", "6", "5" ],
+    [ "5", "6", "8", "1", "7", "9", "3", "4", "2" ],
+    [ "4", "3", "7", "2", "5", "6", "9", "8", "1" ],
+    [ "7", "9", "4", "3", "6", "2", "5", "1", "8" ],
+    [ "2", "5", "1", "9", "8", "4", "6", "7", "3" ],
+    [ "3", "8", "6", "5", "1", "7", "2", "9", "4" ],
+    [ "8", "1", "3", "7", "9", "5", "4", "2", "6" ],
+    [ "6", "7", "2", "8", "4", "3", "1", "5", "9" ],
+    [ "9", "4", "5", "6", "2", "1", "8", "3", "7" ],
+]
+
 // initial page setup
 function pageSetup() {
     const board = document.querySelector('#board')
@@ -98,9 +110,21 @@ function getBoard() {
 
 function solve() {
     const board = getBoard()
-    console.log(completeBoard(board))
-    console.log(validBoard(board))
-    console.log('done')
+    const testing = [
+        [ "1", "2", "9", "4", "3", "8", "", "", "" ],
+        [ "5", "6", "8", "1", "7", "9", "", "", "" ],
+        [ "4", "3", "7", "2", "5", "6", "", "", "" ],
+        [ "7", "9", "4", "3", "6", "2", "5", "1", "8" ],
+        [ "2", "5", "1", "9", "8", "4", "6", "7", "3" ],
+        [ "3", "8", "6", "5", "1", "7", "2", "9", "4" ],
+        [ "8", "1", "3", "7", "9", "5", "4", "2", "6" ],
+        [ "6", "7", "2", "8", "4", "3", "1", "5", "9" ],
+        [ "9", "4", "5", "6", "2", "1", "8", "3", "7" ],
+    ]
+
+    console.log(checkRows(testing))
+    console.log(checkColumns(testing))
+    console.log(checkBoardSegments(testing))
 
 }
 
@@ -195,35 +219,8 @@ function validBoardSegment(board, x, y) {
     return true
 }
 
-function backtrack(board, x, y) {
-    if (!validBoard(board)) {
-        return
-    } else if (completeBoard(board)) {
-        console.log(board)
-        return
-    } else {
-        let nextY = y + 1
-        let nextX = x
-        if (nextY >= 9) {
-            nextY = 0
-            nextX = x + 1
-        }
+function stackSolve(board) {
     
-        if (nextY > 1 || nextX > 2) {
-            return
-        }
-        
-        console.log(nextX, nextY, 'Current', x, y)
-        if (board[y][x] != '') {
-            backtrack(board, nextX, nextY)
-        } else {
-            for (i=1;i<=9;i++) {
-                let newBoard = board.map(inner => inner.slice())
-                newBoard[y][x] = `${i}`
-                backtrack(newBoard, nextX, nextY)
-            }
-        }
-    }
 }
 
 // valid board consists of valid rows, columns, and board segments
