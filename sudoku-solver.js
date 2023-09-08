@@ -67,13 +67,7 @@ function enableSudokuInput() {
 
 function enableSolve() {
     const solveButton = document.querySelector('.solve')
-    solveButton.addEventListener('click', test)
-
-    function test() {
-        const test = getBoard()
-        console.log(completeBoard(test))
-        console.log(3 > 2)
-    }
+    solveButton.addEventListener('click', solve)
 }
 
 pageSetup()
@@ -104,7 +98,9 @@ function getBoard() {
 
 function solve() {
     const board = getBoard()
-    backtrack(board)
+    console.log(completeBoard(board))
+    console.log(validBoard(board))
+    console.log('done')
 
 }
 
@@ -199,26 +195,34 @@ function validBoardSegment(board, x, y) {
     return true
 }
 
-function backtrack(board, x=0, y=0) {
+function backtrack(board, x, y) {
     if (!validBoard(board)) {
         return
-    }
-    if (completeBoard(board)) {
+    } else if (completeBoard(board)) {
         console.log(board)
         return
-    }
-
-    let nextY = y + 1
-    let nextX = x
-    if (nextY > 8) {
-        nextY = 0
-        nextX = x + 1
-    }
-
-    if (board[y][x] != '') {
-        backtrack(board, nextX, nextY)
     } else {
+        let nextY = y + 1
+        let nextX = x
+        if (nextY >= 9) {
+            nextY = 0
+            nextX = x + 1
+        }
+    
+        if (nextY > 1 || nextX > 2) {
+            return
+        }
         
+        console.log(nextX, nextY, 'Current', x, y)
+        if (board[y][x] != '') {
+            backtrack(board, nextX, nextY)
+        } else {
+            for (i=1;i<=9;i++) {
+                let newBoard = board.map(inner => inner.slice())
+                newBoard[y][x] = `${i}`
+                backtrack(newBoard, nextX, nextY)
+            }
+        }
     }
 }
 
