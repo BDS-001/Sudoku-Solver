@@ -130,13 +130,15 @@ function solve() {
         [ "9", "4", "5", "6", "2", "1", "8", "3", "7" ],
     ]
     console.log('WIP')
+    console.log(emptyCell(testing))
+    console.log(checkRow(testing, 0, '6'))
 
 }
 
 function emptyCell(board) {
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
-            if (board[col][row] === '')
+            if (board[row][col] === '')
             return [col, row]
         }
     }
@@ -151,20 +153,8 @@ function completeBoard(board) {
     return true
 }
 
-function checkRows(board) {
-    // go through each row of the board
-    for (row=0;row < board.length;row++) {
-        // in each row check all of the numbers for duplicatees in the row
-        for (num=1;num <= 9; num++) {
-            // filter the board to only have the values that match the current number being checked, if there amre more than 1 instance than the row is not valid
-            if (board[row].filter((sudokuValue) => {
-                return sudokuValue === `${num}`
-            }).length > 1) {
-                return false
-            }
-        }
-    };
-    return true
+function checkRow(board, row, num) {
+    return (board[row].includes(num))
 }
 
 function checkColumns(board) {
