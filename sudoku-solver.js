@@ -143,13 +143,14 @@ function solve() {
 }
 
 // find an empty cell in the board
-function emptyCell(board) {
+function getEmptyCell(board) {
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
             if (board[row][col] === '')
             return [col, row]
         }
     }
+    return false
 }
 
 // check if the number already exists in the row
@@ -175,4 +176,15 @@ function checkBox(board, startRow, startCol, num) {
         }
     }
     return false
+}
+
+function solve(board) {
+    const emptyCell = getEmptyCell(board)
+    if (!emptyCell) return true
+    const row = emptyCell[0]
+    const column = emptyCell[1]
+
+    for (let num = 1; num <= 9; num++) {
+
+    }
 }
