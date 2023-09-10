@@ -134,7 +134,11 @@ function solve() {
     ]
     console.log('WIP')
     console.log(emptyCell(testing))
-    console.log(checkRow(testing, 0, 6))
+    console.log('SHOULD = FALSE', checkRow(testing, 0, 6))
+    console.log('SHOULD = TRUE', checkColumn(testing, 7, 8))
+    console.log('SHOULD = TRUE', checkBox(testing, 0, 0, 6))
+    console.log('SHOULD = TRUE', checkBox(testing, 0, 0, 1))
+    console.log('SHOULD = FALSE', checkBox(testing, 0, 6, 2))
 
 }
 
@@ -147,7 +151,6 @@ function emptyCell(board) {
         }
     }
 }
-
 
 // check if the number already exists in the row
 function checkRow(board, row, num) {
@@ -163,8 +166,13 @@ function checkColumn(board, col, num) {
    return false
 }
 
-
-
-function checkBox(board, row, col, num) {
-    return
+// checks if the number is already in the box 
+function checkBox(board, startRow, startCol, num) {
+    for (let row = startRow; row < startRow + 3;row++) {
+        for (let col = startCol; col < startCol + 3; col++) {
+            console.log(`${num} - ${board[row][col]}, ${row} ${col}`)
+            if (board[row][col] === `${num}`) return true
+        }
+    }
+    return false
 }
