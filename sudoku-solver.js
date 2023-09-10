@@ -178,6 +178,10 @@ function checkBox(board, startRow, startCol, num) {
     return false
 }
 
+function validMove(board, row, column, num) {
+    return checkRow(board, row, num) && checkColumn(board, column, num) && checkBox(board, row, col, num)
+}
+
 function solve(board) {
     const emptyCell = getEmptyCell(board)
     if (!emptyCell) return true
@@ -185,6 +189,6 @@ function solve(board) {
     const column = emptyCell[1]
 
     for (let num = 1; num <= 9; num++) {
-
+        // valid function
     }
 }
