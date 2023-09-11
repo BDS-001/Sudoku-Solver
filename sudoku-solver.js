@@ -133,12 +133,14 @@ function solve() {
         [ "9", "4", "5", "6", "2", "1", "8", "3", "7" ],
     ]
     console.log('WIP')
-    console.log(emptyCell(testing))
-    console.log('SHOULD = FALSE', checkRow(testing, 0, 6))
-    console.log('SHOULD = TRUE', checkColumn(testing, 7, 8))
-    console.log('SHOULD = TRUE', checkBox(testing, 0, 0, 6))
-    console.log('SHOULD = TRUE', checkBox(testing, 0, 0, 1))
-    console.log('SHOULD = FALSE', checkBox(testing, 0, 6, 2))
+    console.log(getEmptyCell(testing))
+    console.log('row SHOULD = FALSE', checkRow(testing, 0, 6))
+    console.log('col SHOULD = TRUE', checkColumn(testing, 7, 8))
+    console.log('box1 SHOULD = TRUE', checkBox(testing, 0, 0, 6))
+    console.log('box2 SHOULD = TRUE', checkBox(testing, 0, 0, 1))
+    console.log('box3 SHOULD = FALSE', checkBox(testing, 0, 6, 2))
+    console.log('move SHOULD = FALSE', validMove(testing, 0, 7, 3))
+    console.log('move SHOULD = True', validMove(testing, 0, 7, 6))
 
 }
 
@@ -147,7 +149,7 @@ function getEmptyCell(board) {
     for (let row = 0; row < 9; row++) {
         for (let col = 0; col < 9; col++) {
             if (board[row][col] === '')
-            return [col, row]
+            return [row, col]
         }
     }
     return false
@@ -171,7 +173,6 @@ function checkColumn(board, col, num) {
 function checkBox(board, startRow, startCol, num) {
     for (let row = startRow; row < startRow + 3;row++) {
         for (let col = startCol; col < startCol + 3; col++) {
-            console.log(`${num} - ${board[row][col]}, ${row} ${col}`)
             if (board[row][col] === `${num}`) return true
         }
     }
@@ -179,10 +180,10 @@ function checkBox(board, startRow, startCol, num) {
 }
 
 function validMove(board, row, column, num) {
-    return checkRow(board, row, num) && checkColumn(board, column, num) && checkBox(board, row, col, num)
+    return !checkRow(board, row, num) && !checkColumn(board, column, num) && !checkBox(board, row - (row % 3), column - (column % 3), num)
 }
 
-function solve(board) {
+function final_solve(board) {
     const emptyCell = getEmptyCell(board)
     if (!emptyCell) return true
     const row = emptyCell[0]
