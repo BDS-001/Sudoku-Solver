@@ -35,6 +35,11 @@ body {
     background-color: #e0f8d0;
 }
 
+input:focus {
+    outline: none;
+}
+
+
 .horizontal-divider,
 .vertical-divider {
     border: 4px solid #081820;
