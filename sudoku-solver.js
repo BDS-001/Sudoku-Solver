@@ -1,22 +1,3 @@
-let solved = false
-
-let test2 = [
-    [ "1", "2", "9", "4", "3", "8", "7", "6", "5" ],
-    [ "5", "6", "8", "1", "7", "9", "3", "4", "2" ],
-    [ "4", "3", "7", "2", "5", "6", "9", "8", "1" ],
-    [ "7", "9", "4", "3", "6", "2", "5", "1", "8" ],
-    [ "2", "5", "1", "9", "8", "4", "6", "7", "3" ],
-    [ "3", "8", "6", "5", "1", "7", "2", "9", "4" ],
-    [ "8", "1", "3", "7", "9", "5", "4", "2", "6" ],
-    [ "6", "7", "2", "8", "4", "3", "1", "5", "9" ],
-    [ "9", "4", "5", "6", "2", "1", "8", "3", "7" ],
-]
-
-
-
-
-
-
 
 // initial page setup
 function pageSetup() {
@@ -132,6 +113,19 @@ function testSolve() {
         [ "6", "7", "2", "8", "4", "3", "1", "5", "9" ],
         [ "9", "4", "5", "6", "2", "1", "8", "3", "7" ],
     ]
+
+    const solvedTesting = [
+    [ "1", "2", "9", "4", "3", "8", "7", "6", "5" ],
+    [ "5", "6", "8", "1", "7", "9", "3", "4", "2" ],
+    [ "4", "3", "7", "2", "5", "6", "9", "8", "1" ],
+    [ "7", "9", "4", "3", "6", "2", "5", "1", "8" ],
+    [ "2", "5", "1", "9", "8", "4", "6", "7", "3" ],
+    [ "3", "8", "6", "5", "1", "7", "2", "9", "4" ],
+    [ "8", "1", "3", "7", "9", "5", "4", "2", "6" ],
+    [ "6", "7", "2", "8", "4", "3", "1", "5", "9" ],
+    [ "9", "4", "5", "6", "2", "1", "8", "3", "7" ],
+]
+
     console.log('WIP')
     console.log(getEmptyCell(testing))
     console.log('row SHOULD = FALSE', checkRow(testing, 0, 6))
@@ -141,6 +135,7 @@ function testSolve() {
     console.log('box3 SHOULD = FALSE', checkBox(testing, 0, 6, 2))
     console.log('move SHOULD = FALSE', validMove(testing, 0, 7, 3))
     console.log('move SHOULD = True', validMove(testing, 0, 7, 6))
+    console.log('should match', solve(testing, 0, 7, 6), solvedTesting)
 
 }
 
@@ -189,21 +184,25 @@ function solve(board) {
     const emptyCell = getEmptyCell(board)
 
     // if there are no empty cells than the board is solved, otherwise get the coordinates
-    if (!emptyCell) return true
+    if (!emptyCell) return board
     const row = emptyCell[0]
     const column = emptyCell[1]
 
     //try each number
     for (let num = 1; num <= 9; num++) {
         if (validMove(board, row, column, num)) {
-            board[row][col] = `${num}`
+            board[row][column] = `${num}`
 
             // try to solve with the current valid number
-            if (final_solve(board)) {
-                return true
+            if (solve(board)) {
+                return board
             }
+
+        board[row][column] = ''
         }
     }
 
-
+    // return false when cannot solve puzzle
+    return false
 }
+
