@@ -87,7 +87,7 @@ function enableSudokuInput() {
 
 function enableSolve() {
     const solveButton = document.querySelector('.solve')
-    solveButton.addEventListener('click', solve)
+    solveButton.addEventListener('click', testSolve)
 }
 
 pageSetup()
@@ -119,7 +119,7 @@ function getBoard() {
 }
 
 // solve the sudoku puzzle
-function solve() {
+function testSolve() {
     const board = getBoard()
     const testing = [
         [ "1", "2", "9", "4", "3", "8", "", "", "" ],
@@ -179,17 +179,31 @@ function checkBox(board, startRow, startCol, num) {
     return false
 }
 
+// check if the number is valid in the selected cell
 function validMove(board, row, column, num) {
     return !checkRow(board, row, num) && !checkColumn(board, column, num) && !checkBox(board, row - (row % 3), column - (column % 3), num)
 }
 
-function final_solve(board) {
+function solve(board) {
+    // try and get an empty cell
     const emptyCell = getEmptyCell(board)
+
+    // if there are no empty cells than the board is solved, otherwise get the coordinates
     if (!emptyCell) return true
     const row = emptyCell[0]
     const column = emptyCell[1]
 
+    //try each number
     for (let num = 1; num <= 9; num++) {
-        // valid function
+        if (validMove(board, row, column, num)) {
+            board[row][col] = `${num}`
+
+            // try to solve with the current valid number
+            if (final_solve(board)) {
+                return true
+            }
+        }
     }
+
+
 }
