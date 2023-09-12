@@ -135,7 +135,7 @@ function testSolve() {
     console.log('box3 SHOULD = FALSE', checkBox(testing, 0, 6, 2))
     console.log('move SHOULD = FALSE', validMove(testing, 0, 7, 3))
     console.log('move SHOULD = True', validMove(testing, 0, 7, 6))
-    console.log('should match', solve(testing, 0, 7, 6), solvedTesting)
+    console.log('should match', solve(testing), solvedTesting)
 
 }
 
