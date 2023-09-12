@@ -63,4 +63,13 @@ body {
 
 }
 
+button:active {
+
+    transform: scale(0.85)
+
+}
+
+button:hover {
+    filter: brightness(60%);
+}
 /* reference for color pallet https://lospec.com/palette-list/nintendo-gameboy-bgb */
