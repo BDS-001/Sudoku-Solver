@@ -22,7 +22,7 @@ body {
     display: flex;
 }
 
-.number-box {
+.cell {
     border: 1px solid black;
     width: 99%;
     height: 99%;

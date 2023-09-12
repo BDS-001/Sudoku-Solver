@@ -20,7 +20,7 @@ function pageSetup() {
         // in each row, add 9 input boxes
         for (let i=1;i<=9;i++) {
             const inputBox = document.createElement('input')
-            inputBox.className = 'number-box'
+            inputBox.className = 'cell'
             inputBox.type = 'text'
             boardRow.append(inputBox)
             
@@ -47,7 +47,7 @@ function pageSetup() {
 }
 
 function enableSudokuInput() {
-    const inputBoxes = document.querySelectorAll('.number-box')
+    const inputBoxes = document.querySelectorAll('.cell')
     inputBoxes.forEach(function(inputBox) {
 
         // Add an event listener to the input field for the "keydown" event
@@ -68,7 +68,7 @@ function enableSudokuInput() {
 
 function enableSolve() {
     const solveButton = document.querySelector('.solve')
-    solveButton.addEventListener('click', testSolve)
+    solveButton.addEventListener('click', initiateSolve)
 }
 
 pageSetup()
@@ -89,7 +89,7 @@ function getBoard() {
     let board = []
 
     boardRows.forEach((row) => {
-        const sudokuValues = row.querySelectorAll('.number-box')
+        const sudokuValues = row.querySelectorAll('.cell')
         let tmpRow = []
         sudokuValues.forEach((inputBox) => {
             tmpRow.push(inputBox.value)
@@ -142,12 +142,18 @@ function testSolve() {
 // find an empty cell in the board
 function getEmptyCell(board) {
     for (let row = 0; row < 9; row++) {
-        for (let col = 0; col < 9; col++) {
-            if (board[row][col] === '')
-            return [row, col]
+        for (let column = 0; column < 9; column++) {
+            if (board[row][column] === '')
+            return [row, column]
         }
     }
     return false
+}
+
+function initiateSolve() {
+    const startingBoard = getBoard()
+    solve(startingBoard)
+
 }
 
 // check if the number already exists in the row
@@ -156,10 +162,10 @@ function checkRow(board, row, num) {
 }
 
 // check if the number is already in the column
-function checkColumn(board, col, num) {
+function checkColumn(board, column, num) {
     // loop through each column in the board
    for (let row=0;row<board.length;row++) {
-        if (board[row][col] === `${num}`) return true
+        if (board[row][column] === `${num}`) return true
    }
    return false
 }
@@ -167,8 +173,8 @@ function checkColumn(board, col, num) {
 // checks if the number is already in the box 
 function checkBox(board, startRow, startCol, num) {
     for (let row = startRow; row < startRow + 3;row++) {
-        for (let col = startCol; col < startCol + 3; col++) {
-            if (board[row][col] === `${num}`) return true
+        for (let column = startCol; column < startCol + 3; column++) {
+            if (board[row][column] === `${num}`) return true
         }
     }
     return false
@@ -192,6 +198,7 @@ function solve(board) {
     for (let num = 1; num <= 9; num++) {
         if (validMove(board, row, column, num)) {
             board[row][column] = `${num}`
+            updateBoard(row, column, num)
 
             // try to solve with the current valid number
             if (solve(board)) {
@@ -199,6 +206,7 @@ function solve(board) {
             }
 
         board[row][column] = ''
+        updateBoard(row, column, '')
         }
     }
 
@@ -206,3 +214,9 @@ function solve(board) {
     return false
 }
 
+//update the sudoku board with the solution
+function updateBoard(row, column, val) {
+    const boardRow = document.querySelectorAll('.board-row')
+    const cells = boardRow[row].querySelectorAll('.cell')
+    cells[column].value = val
+}
