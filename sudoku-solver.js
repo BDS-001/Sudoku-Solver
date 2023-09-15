@@ -143,16 +143,21 @@ function testSolve() {
 function getEmptyCell(board) {
     for (let row = 0; row < 9; row++) {
         for (let column = 0; column < 9; column++) {
-            if (board[row][column] === '')
-            return [row, column]
+            if (board[row][column] === '') {
+                return [row, column]
+            }
         }
     }
-    return false
+    return null
 }
 
 function initiateSolve() {
     const startingBoard = getBoard()
-    solve(startingBoard)
+    if (solve(startingBoard)) {
+        console.log(startingBoard);
+      } else {
+        console.log("No solution");
+      }
 
 }
 
@@ -186,33 +191,34 @@ function validMove(board, row, column, num) {
 }
 
 function solve(board) {
-    // try and get an empty cell
-    const emptyCell = getEmptyCell(board)
-
-    // if there are no empty cells than the board is solved, otherwise get the coordinates
-    if (!emptyCell) return board
-    const row = emptyCell[0]
-    const column = emptyCell[1]
-
-    //try each number
-    for (let num = 1; num <= 9; num++) {
-        if (validMove(board, row, column, num)) {
-            board[row][column] = `${num}`
-            updateBoard(row, column, num)
-
-            // try to solve with the current valid number
-            if (solve(board)) {
-                return board
-            }
-
-        board[row][column] = ''
-        updateBoard(row, column, '')
-        }
+    // Find an empty cell in the board
+    const emptyCell = getEmptyCell(board);
+  
+    // If there are no empty cells, the puzzle is solved
+    if (!emptyCell) {
+      return true;
     }
-
-    // return false when cannot solve puzzle
-    return false
-}
+  
+    const row = emptyCell[0] 
+    const column = emptyCell[1];
+  
+    // Try filling the empty cell with numbers from 1 to 9
+    for (let num = 1; num <= 9; num++) {
+      if (validMove(board, row, column, num)) {
+        // If the current number is a valid move, try it
+        board[row][column] = `${num}`;
+  
+        // Recursively attempt to solve the puzzle with the current move
+        if (solve(board)) {
+          return true; // If a solution is found, return true
+        }
+  
+        board[row][column] = '';
+      }
+    }
+  
+    return false;
+  }
 
 //update the sudoku board with the solution
 function updateBoard(row, column, val) {
@@ -220,3 +226,5 @@ function updateBoard(row, column, val) {
     const cells = boardRow[row].querySelectorAll('.cell')
     cells[column].value = val
 }
+
+
