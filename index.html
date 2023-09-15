@@ -9,20 +9,24 @@
     <script src="./sudoku-solver.js" defer></script>
 </head>
 <body>
-    <div class="side-content">
-        <div class="instructions">
-            <h3>Instructions:</h3>
-            <ol>
-                <li>Enter the starting numbers for the sudoku puzzle using the 1-9 number keys (any other key will clear the block)</li>
-                <li>Optional: attempt to solve some of the puzzle by fitting the numbers 1-9 in each row, column, and block without repeating numbers</li>
-                <li>Click the solve button to find the missing pieces of the sudoku puzzle</li>
-            </ol>
+    <div class="header">Sudoku Solver</div>
+    <div class="page-content">
+        <div class="side-content">
+            <div class="instructions">
+                <h3>Instructions:</h3>
+                <ol>
+                    <li>Enter the starting numbers for the sudoku puzzle using the 1-9 number keys (any other key will clear the block)</li>
+                    <li>Optional: attempt to solve some of the puzzle by fitting the numbers 1-9 in each row, column, and block without repeating numbers</li>
+                    <li>Click the solve button to find the missing pieces of the sudoku puzzle</li>
+                </ol>
+            </div>
+        </div>
+        <div class="main-content">
+            <div id="board"></div>
+        </div>
+        <div class="side-content">
+            <button class="solve">Solve</button>
         </div>
     </div>
-    <div class="main-content">
-        <button class="solve">Solve</button>
-        <div id="board"></div>
-    </div>
-    <div class="side-content"></div>
 </body>
 </html>
