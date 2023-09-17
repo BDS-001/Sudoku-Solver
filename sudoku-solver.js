@@ -92,58 +92,23 @@ function getBoard() {
         const sudokuValues = row.querySelectorAll('.cell')
         let tmpRow = []
         sudokuValues.forEach((inputBox) => {
-            tmpRow.push(inputBox.value)
+            const num = parseInt(inputBox.value)
+            if (num) {
+                tmpRow.push(inputBox.value)
+            } else {
+                tmpRow.push(0)
+            }
         })
         board.push(tmpRow)
     })
     return board
 }
 
-// solve the sudoku puzzle
-function testSolve() {
-    const board = getBoard()
-    const testing = [
-        [ "1", "2", "9", "4", "3", "8", "", "", "" ],
-        [ "5", "6", "8", "1", "7", "9", "", "", "" ],
-        [ "4", "3", "7", "2", "5", "6", "", "8", "1" ],
-        [ "7", "9", "4", "3", "6", "2", "5", "1", "8" ],
-        [ "2", "5", "1", "9", "8", "4", "6", "7", "3" ],
-        [ "3", "8", "6", "5", "1", "7", "2", "9", "4" ],
-        [ "8", "1", "3", "7", "9", "5", "4", "2", "6" ],
-        [ "6", "7", "2", "8", "4", "3", "1", "5", "9" ],
-        [ "9", "4", "5", "6", "2", "1", "8", "3", "7" ],
-    ]
-
-    const solvedTesting = [
-    [ "1", "2", "9", "4", "3", "8", "7", "6", "5" ],
-    [ "5", "6", "8", "1", "7", "9", "3", "4", "2" ],
-    [ "4", "3", "7", "2", "5", "6", "9", "8", "1" ],
-    [ "7", "9", "4", "3", "6", "2", "5", "1", "8" ],
-    [ "2", "5", "1", "9", "8", "4", "6", "7", "3" ],
-    [ "3", "8", "6", "5", "1", "7", "2", "9", "4" ],
-    [ "8", "1", "3", "7", "9", "5", "4", "2", "6" ],
-    [ "6", "7", "2", "8", "4", "3", "1", "5", "9" ],
-    [ "9", "4", "5", "6", "2", "1", "8", "3", "7" ],
-]
-
-    console.log('WIP')
-    console.log(getEmptyCell(testing))
-    console.log('row SHOULD = FALSE', checkRow(testing, 0, 6))
-    console.log('col SHOULD = TRUE', checkColumn(testing, 7, 8))
-    console.log('box1 SHOULD = TRUE', checkBox(testing, 0, 0, 6))
-    console.log('box2 SHOULD = TRUE', checkBox(testing, 0, 0, 1))
-    console.log('box3 SHOULD = FALSE', checkBox(testing, 0, 6, 2))
-    console.log('move SHOULD = FALSE', validMove(testing, 0, 7, 3))
-    console.log('move SHOULD = True', validMove(testing, 0, 7, 6))
-    console.log('should match', solve(testing), solvedTesting)
-
-}
-
 // find an empty cell in the board
 function getEmptyCell(board) {
     for (let row = 0; row < 9; row++) {
         for (let column = 0; column < 9; column++) {
-            if (board[row][column] === '') {
+            if (board[row][column] === 0) {
                 return [row, column]
             }
         }
@@ -163,14 +128,14 @@ function initiateSolve() {
 
 // check if the number already exists in the row
 function checkRow(board, row, num) {
-    return (board[row].includes(`${num}`))
+    return (board[row].includes(num))
 }
 
 // check if the number is already in the column
 function checkColumn(board, column, num) {
     // loop through each column in the board
    for (let row=0;row<board.length;row++) {
-        if (board[row][column] === `${num}`) return true
+        if (board[row][column] === num) return true
    }
    return false
 }
@@ -179,7 +144,7 @@ function checkColumn(board, column, num) {
 function checkBox(board, startRow, startCol, num) {
     for (let row = startRow; row < startRow + 3;row++) {
         for (let column = startCol; column < startCol + 3; column++) {
-            if (board[row][column] === `${num}`) return true
+            if (board[row][column] === num) return true
         }
     }
     return false
@@ -206,14 +171,14 @@ function solve(board) {
     for (let num = 1; num <= 9; num++) {
       if (validMove(board, row, column, num)) {
         // If the current number is a valid move, try it
-        board[row][column] = `${num}`;
+        board[row][column] = num;
   
         // Recursively attempt to solve the puzzle with the current move
         if (solve(board)) {
           return true; // If a solution is found, return true
         }
   
-        board[row][column] = '';
+        board[row][column] = 0;
       }
     }
   
@@ -226,5 +191,4 @@ function updateBoard(row, column, val) {
     const cells = boardRow[row].querySelectorAll('.cell')
     cells[column].value = val
 }
-
 
