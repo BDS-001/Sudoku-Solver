@@ -94,7 +94,7 @@ function getBoard() {
         sudokuValues.forEach((inputBox) => {
             const num = parseInt(inputBox.value)
             if (num) {
-                tmpRow.push(inputBox.value)
+                tmpRow.push(num)
             } else {
                 tmpRow.push(0)
             }
@@ -118,10 +118,12 @@ function getEmptyCell(board) {
 
 function initiateSolve() {
     const startingBoard = getBoard()
+      console.log(startingBoard, trt)
     if (solve(startingBoard)) {
         console.log(startingBoard);
       } else {
         console.log("No solution");
+        alert('No solution')
       }
 
 }
@@ -186,9 +188,3 @@ function solve(board) {
   }
 
 //update the sudoku board with the solution
-function updateBoard(row, column, val) {
-    const boardRow = document.querySelectorAll('.board-row')
-    const cells = boardRow[row].querySelectorAll('.cell')
-    cells[column].value = val
-}
-
